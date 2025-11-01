@@ -25,7 +25,8 @@ export default defineConfig({
         name: 'Countdown Timer',
         short_name: 'Countdown',
         description: 'Track important events with countdown timers',
-        theme_color: '#ffffff',
+        theme_color: '#000000',
+        background_color: '#000000',
         icons: [
           {
             src: 'pwa-192x192.png',
