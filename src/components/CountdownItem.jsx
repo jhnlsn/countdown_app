@@ -8,6 +8,7 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
   const currentX = useRef(0)
   const isDragging = useRef(false)
   const cardRef = useRef(null)
+  const hasDragged = useRef(false)
 
   const SWIPE_THRESHOLD = 100
   const DELETE_BUTTON_WIDTH = 100
@@ -38,8 +39,11 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
   const isOpen = openCardId === event.id
 
   const handleClick = (e) => {
-    // Don't open overlay if clicking delete button or while dragging
-    if (e.target.closest('.delete-btn-swipe') || isDragging.current) return
+    // Don't open overlay if clicking delete button or if user just dragged
+    if (e.target.closest('.delete-btn-swipe') || hasDragged.current) {
+      hasDragged.current = false
+      return
+    }
     // Close if clicking on an open card
     if (isOpen) {
       setOffset(0)
@@ -53,13 +57,24 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
     startX.current = clientX
     currentX.current = clientX
     isDragging.current = true
+    hasDragged.current = false
   }
 
-  const handleMove = (clientX) => {
+  const handleMove = (clientX, e) => {
     if (!isDragging.current) return
 
+    const diff = startX.current - clientX
+
+    // If moved more than 5px horizontally, mark as dragged and prevent scroll
+    if (Math.abs(diff) > 5) {
+      hasDragged.current = true
+      // Prevent vertical scrolling during horizontal swipe
+      if (e && e.cancelable) {
+        e.preventDefault()
+      }
+    }
+
     currentX.current = clientX
-    const diff = startX.current - currentX.current
 
     // Only allow dragging left (diff > 0)
     if (diff > 0) {
@@ -91,6 +106,11 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
       // Didn't swipe enough, close
       setOffset(0)
     }
+
+    // Reset hasDragged after a short delay to allow click event to fire
+    setTimeout(() => {
+      hasDragged.current = false
+    }, 100)
   }
 
   const handleDelete = (e) => {
@@ -99,7 +119,7 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
   }
 
   return (
-    <div className="countdown-item-wrapper" ref={cardRef}>
+    <div className={`countdown-item-wrapper ${isOpen ? 'card-open' : ''}`} ref={cardRef}>
       <div
         className={`countdown-item ${isPast ? 'past' : ''}`}
         style={{
@@ -108,11 +128,11 @@ function CountdownItem({ event, onDelete, onClick, openCardId, setOpenCardId }) 
         }}
         onClick={handleClick}
         onMouseDown={(e) => handleStart(e.clientX)}
-        onMouseMove={(e) => handleMove(e.clientX)}
+        onMouseMove={(e) => handleMove(e.clientX, e)}
         onMouseUp={handleEnd}
         onMouseLeave={handleEnd}
         onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-        onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+        onTouchMove={(e) => handleMove(e.touches[0].clientX, e)}
         onTouchEnd={handleEnd}
       >
         {event.icon && <div className="event-icon">{event.icon}</div>}
