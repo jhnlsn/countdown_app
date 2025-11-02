@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import CountdownList from './components/CountdownList'
 import AddEventForm from './components/AddEventForm'
 import FullScreenCountdown from './components/FullScreenCountdown'
@@ -93,6 +94,7 @@ function App() {
           />
         )}
       </main>
+      <Analytics />
     </div>
   )
 }
