@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import CountdownList from './components/CountdownList'
 import AddEventForm from './components/AddEventForm'
 import FullScreenCountdown from './components/FullScreenCountdown'
@@ -95,6 +96,7 @@ function App() {
         )}
       </main>
       <Analytics />
+      <SpeedInsights />
     </div>
   )
 }
