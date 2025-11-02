@@ -50,6 +50,13 @@ function AddEventForm({ onAddEvent }) {
     })
   }
 
+  const handleClearTime = () => {
+    setFormData({
+      ...formData,
+      time: ''
+    })
+  }
+
   return (
     <div className="add-event-form">
       <h2>Add New Event</h2>
@@ -82,13 +89,25 @@ function AddEventForm({ onAddEvent }) {
 
           <div className="form-group">
             <label htmlFor="time">Time (optional)</label>
-            <input
-              type="time"
-              id="time"
-              name="time"
-              value={formData.time}
-              onChange={handleChange}
-            />
+            <div className="time-input-wrapper">
+              <input
+                type="time"
+                id="time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+              />
+              {formData.time && (
+                <button
+                  type="button"
+                  className="clear-time-button"
+                  onClick={handleClearTime}
+                  aria-label="Clear time"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
         </div>
 

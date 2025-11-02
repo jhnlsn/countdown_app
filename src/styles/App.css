@@ -180,6 +180,41 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+.time-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.time-input-wrapper input {
+  padding-right: 2.5rem;
+}
+
+.clear-time-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-light);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.clear-time-button:hover {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
 .icon-picker {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
