@@ -16,6 +16,7 @@ function AddEventForm({ onAddEvent }) {
     time: '',
     icon: '🎉'
   })
+  const [allDay, setAllDay] = useState(true)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -25,7 +26,15 @@ function AddEventForm({ onAddEvent }) {
       return
     }
 
-    onAddEvent(formData)
+    // Only include time if not all day
+    const eventData = {
+      name: formData.name,
+      date: formData.date,
+      time: allDay ? '' : formData.time,
+      icon: formData.icon
+    }
+
+    onAddEvent(eventData)
 
     // Reset form
     setFormData({
@@ -34,6 +43,7 @@ function AddEventForm({ onAddEvent }) {
       time: '',
       icon: '🎉'
     })
+    setAllDay(true)
   }
 
   const handleChange = (e) => {
@@ -67,21 +77,35 @@ function AddEventForm({ onAddEvent }) {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="date">Date *</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="date">Date *</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
+        <div className="form-group">
+          <div className="toggle-container">
+            <span className="toggle-text">All Day</span>
+            <label className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={allDay}
+                onChange={(e) => setAllDay(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        {!allDay && (
           <div className="form-group">
-            <label htmlFor="time">Time (optional)</label>
+            <label htmlFor="time">Time</label>
             <input
               type="time"
               id="time"
@@ -90,7 +114,7 @@ function AddEventForm({ onAddEvent }) {
               onChange={handleChange}
             />
           </div>
-        </div>
+        )}
 
         <div className="form-group">
           <label>Icon</label>
