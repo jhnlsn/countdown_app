@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { calculateTimeRemaining } from '../utils/dateUtils'
 
-function FullScreenCountdown({ event, onClose }) {
+function FullScreenCountdown({ event, onClose, onEdit }) {
   const [timeRemaining, setTimeRemaining] = useState(null)
 
   useEffect(() => {
@@ -34,6 +34,13 @@ function FullScreenCountdown({ event, onClose }) {
   return (
     <div className="fullscreen-overlay" onClick={onClose}>
       <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
+        <button
+          className="fullscreen-edit"
+          onClick={() => onEdit(event)}
+          aria-label="Edit event"
+        >
+          ✏️
+        </button>
         <button
           className="fullscreen-close"
           onClick={onClose}

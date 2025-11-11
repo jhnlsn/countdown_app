@@ -16,6 +16,7 @@ function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const [editingEvent, setEditingEvent] = useState(null)
 
   // Save events to localStorage whenever they change
   useEffect(() => {
@@ -44,12 +45,36 @@ function App() {
     setIsModalOpen(false) // Close modal after adding event
   }
 
+  const updateEvent = (id, updatedData) => {
+    setEvents(events.map(event => {
+      if (event.id === id) {
+        return {
+          ...event,
+          ...updatedData,
+          // Preserve original properties
+          id: event.id,
+          color: event.color,
+          createdAt: event.createdAt
+        }
+      }
+      return event
+    }))
+    setIsModalOpen(false)
+    setEditingEvent(null)
+  }
+
   const deleteEvent = (id) => {
     setEvents(events.filter(event => event.id !== id))
   }
 
   const handleEventClick = (event) => {
     setSelectedEvent(event)
+  }
+
+  const handleEditEvent = (event) => {
+    setSelectedEvent(null) // Close full-screen view
+    setEditingEvent(event) // Set event to edit
+    setIsModalOpen(true) // Open modal
   }
 
   const closeFullScreen = () => {
@@ -74,16 +99,26 @@ function App() {
         </button>
 
         {isModalOpen && (
-          <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-overlay" onClick={() => {
+            setIsModalOpen(false)
+            setEditingEvent(null)
+          }}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <button
                 className="modal-close"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsModalOpen(false)
+                  setEditingEvent(null)
+                }}
                 aria-label="Close modal"
               >
                 ×
               </button>
-              <AddEventForm onAddEvent={addEvent} />
+              <AddEventForm
+                onAddEvent={addEvent}
+                onUpdateEvent={updateEvent}
+                editingEvent={editingEvent}
+              />
             </div>
           </div>
         )}
@@ -92,6 +127,7 @@ function App() {
           <FullScreenCountdown
             event={selectedEvent}
             onClose={closeFullScreen}
+            onEdit={handleEditEvent}
           />
         )}
       </main>

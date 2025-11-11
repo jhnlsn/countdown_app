@@ -537,6 +537,28 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+.fullscreen-edit {
+  position: absolute;
+  top: -1rem;
+  right: 4rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.fullscreen-edit:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 .fullscreen-header {
   margin-bottom: 3rem;
 }

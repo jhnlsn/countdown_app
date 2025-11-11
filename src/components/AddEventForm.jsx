@@ -9,14 +9,16 @@ const ICONS = [
   '🍕', '🍰', '🎵', '🎬', // entertainment
 ]
 
-function AddEventForm({ onAddEvent }) {
+function AddEventForm({ onAddEvent, onUpdateEvent, editingEvent }) {
+  const isEditMode = !!editingEvent
+
   const [formData, setFormData] = useState({
-    name: '',
-    date: '',
-    time: '',
-    icon: '🎉'
+    name: editingEvent?.name || '',
+    date: editingEvent?.date || '',
+    time: editingEvent?.time || '',
+    icon: editingEvent?.icon || '🎉'
   })
-  const [allDay, setAllDay] = useState(true)
+  const [allDay, setAllDay] = useState(!editingEvent?.time)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,16 +36,22 @@ function AddEventForm({ onAddEvent }) {
       icon: formData.icon
     }
 
-    onAddEvent(eventData)
+    if (isEditMode) {
+      onUpdateEvent(editingEvent.id, eventData)
+    } else {
+      onAddEvent(eventData)
+    }
 
-    // Reset form
-    setFormData({
-      name: '',
-      date: '',
-      time: '',
-      icon: '🎉'
-    })
-    setAllDay(true)
+    // Reset form (only needed in add mode, but harmless in edit mode)
+    if (!isEditMode) {
+      setFormData({
+        name: '',
+        date: '',
+        time: '',
+        icon: '🎉'
+      })
+      setAllDay(true)
+    }
   }
 
   const handleChange = (e) => {
@@ -62,7 +70,7 @@ function AddEventForm({ onAddEvent }) {
 
   return (
     <div className="add-event-form">
-      <h2>Add New Event</h2>
+      <h2>{isEditMode ? 'Edit Event' : 'Add New Event'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Event Name *</label>
@@ -132,7 +140,9 @@ function AddEventForm({ onAddEvent }) {
           </div>
         </div>
 
-        <button type="submit" className="btn-primary">Add Event</button>
+        <button type="submit" className="btn-primary">
+          {isEditMode ? 'Save Changes' : 'Add Event'}
+        </button>
       </form>
     </div>
   )
