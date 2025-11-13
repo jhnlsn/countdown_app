@@ -531,6 +531,9 @@
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
 }
 
 .fullscreen-close:hover {
@@ -553,6 +556,8 @@
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  padding: 0;
+  margin: 0;
   line-height: 1;
 }
 
