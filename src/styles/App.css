@@ -526,11 +526,20 @@
   cursor: pointer;
   width: 3.5rem;
   height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .fullscreen-close:hover {
@@ -539,20 +548,29 @@
 
 .fullscreen-edit {
   position: absolute;
-  top: -1rem;
+  top: 0;
   right: 4rem;
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
   width: 3.5rem;
   height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .fullscreen-edit:hover {
