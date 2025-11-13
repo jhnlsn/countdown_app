@@ -544,7 +544,7 @@
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
   width: 3.5rem;
   height: 3.5rem;
@@ -553,6 +553,7 @@
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  line-height: 1;
 }
 
 .fullscreen-edit:hover {
