@@ -526,6 +526,10 @@
   cursor: pointer;
   width: 3.5rem;
   height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -534,6 +538,8 @@
   padding: 0;
   margin: 0;
   line-height: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .fullscreen-close:hover {
@@ -551,6 +557,10 @@
   cursor: pointer;
   width: 3.5rem;
   height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -559,6 +569,8 @@
   padding: 0;
   margin: 0;
   line-height: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .fullscreen-edit:hover {
